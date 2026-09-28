@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 538805332411290381}
   - component: {fileID: 3493762117194296850}
   - component: {fileID: 6052126309993871321}
-  - component: {fileID: -1794066404640890992}
   m_Layer: 5
   m_Name: DraggableShape
   m_TagString: Untagged
@@ -92,15 +91,3 @@ MonoBehaviour:
   dragOffsetYScreen: 100
   scaleOnDrag: 1.2
   blockTilePrefab: {fileID: 6307189576060649084, guid: 656792aae131db949bca4ab52dc8d799, type: 3}
---- !u!114 &-1794066404640890992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7021743051175260563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20d15135fff726b4ab8f53e4aea34562, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShapeController

@@ -35,7 +35,10 @@ namespace BlockBlast.Shape
         {
             for (int i = 0; i < 3; i++)
             {
-                if (slots[i].childCount > 0) continue;
+                // Không dùng slots[i].childCount: khối vừa đặt xong vẫn còn là con của slot
+                // cho tới cuối frame (Destroy bị trì hoãn), nên slot đó bị coi nhầm là "còn khối".
+                // currentShapes[i] đã được gán null ngay trong OnShapePlaced nên đáng tin cậy hơn.
+                if (currentShapes[i] != null) continue;
 
                 ShapeData randomData = availableShapes[Random.Range(0, availableShapes.Count)];
                 DraggableShape newShape = Instantiate(shapePrefab, slots[i]);

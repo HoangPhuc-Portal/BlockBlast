@@ -67,6 +67,23 @@ namespace BlockBlast.Shape
             }
         }
 
+        // Chiếu điểm màn hình xuống đúng mặt phẳng của bàn cờ (thay vì ScreenToWorldPoint(z=0),
+        // vốn chỉ đúng với camera Orthographic; camera trong scene này là Perspective nên
+        // cách cũ luôn trả về sai tọa độ X/Y).
+        private Vector3 ScreenPointToBoardWorldPosition(Vector2 screenPos)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(screenPos);
+            Plane boardPlane = new Plane(Vector3.forward, new Vector3(0, 0, GridBoard.Instance.BoardZ));
+
+            if (boardPlane.Raycast(ray, out float distance))
+            {
+                return ray.GetPoint(distance);
+            }
+
+            // Trường hợp hy hữu tia không cắt mặt phẳng: trả về vị trí hiện tại của khối
+            return transform.position;
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
             transform.localScale = originalScale * scaleOnDrag;
@@ -84,8 +101,7 @@ namespace BlockBlast.Shape
 
             transform.localPosition = localPoint;
 
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-            worldPos.z = 0;
+            Vector3 worldPos = ScreenPointToBoardWorldPosition(mousePos);
 
             GridBoard.Instance.UpdateDragPreview(ShapeData, worldPos);
         }
@@ -95,8 +111,7 @@ namespace BlockBlast.Shape
             transform.localScale = originalScale;
 
             Vector2 mousePos = eventData.position + new Vector2(0, dragOffsetYScreen);
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-            worldPos.z = 0;
+            Vector3 worldPos = ScreenPointToBoardWorldPosition(mousePos);
 
             bool success = GridBoard.Instance.TryPlaceShape(ShapeData, worldPos);
 

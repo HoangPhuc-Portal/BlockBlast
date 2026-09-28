@@ -14,6 +14,10 @@ namespace BlockBlast.Grid
 
         public const int GRID_SIZE = 8;
 
+        // Mặt phẳng Z nơi toàn bộ các ô lưới được sinh ra (xem GenerateBoard).
+        // Dùng để raycast từ camera 3D xuống đúng mặt phẳng bàn cờ khi kéo-thả.
+        public float BoardZ => transform.position.z;
+
         [Header("Board Settings")]
         [SerializeField] private GridCell cellPrefab;
         [SerializeField] private Transform boardParent;
@@ -29,11 +33,6 @@ namespace BlockBlast.Grid
             else Destroy(gameObject);
 
             GenerateBoard();
-        }
-
-        private void Start()
-        {
-            //GenerateBoard();
         }
 
         private void GenerateBoard()
